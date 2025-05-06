@@ -1,0 +1,21 @@
+services:
+  postgres-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-postgres
+      args:
+        USER_ID: ${HOST_UID}
+        GROUP_ID: ${HOST_GID}
+    container_name: postgres-service-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/pgsql/data
+      - ./postgresql.conf:/var/lib/pgsql/data/postgresql.conf
+
+networks:
+  default:
+    name: postgres_network
+
+volumes:
+  postgres_data:
