@@ -11,8 +11,8 @@ echo "Ensuring correct ownership and permissions for $PGDATA..."
 chown -R postgres:postgres "$PGDATA"
 chmod 700 "$PGDATA"
 
-# Initialize the database if PG_VERSION does not exist
-if [ ! -f "$PGDATA/PG_VERSION" ]; then
+# Initialize the database if not already initialized
+if [ ! -d "$PGDATA/base" ]; then
     echo "Initializing PostgreSQL database..."
     su postgres -c "initdb -D \"$PGDATA\""
 
@@ -37,8 +37,9 @@ if [ ! -f "$PGDATA/PG_VERSION" ]; then
     su postgres -c "pg_ctl -D \"$PGDATA\" -m fast -w stop"
 
     echo "Database initialization complete."
+else
+    echo "Database already initialized. Skipping initdb."
 fi
 
 # Start PostgreSQL in the foreground as 'postgres' user
 exec su postgres -c "postgres -D \"$PGDATA\" -c config_file=\"$PGDATA/postgresql.conf\" -k /tmp"
-
