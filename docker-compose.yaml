@@ -10,8 +10,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres_data:/var/lib/pgsql/data
-      - ./postgresql.conf:/var/lib/pgsql/data/postgresql.conf
+      - postgres_data:/var/lib/pgsql/data
+      - ./postgresql.conf:/var/lib/pgsql/data/postgresql.conf:ro
 
 networks:
   default:
