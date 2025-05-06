@@ -4,8 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile-postgres
       args:
-        USER_ID: ${HOST_UID}
-        GROUP_ID: ${HOST_GID}
+        USER_ID: 1000
+        GROUP_ID: 1000
     container_name: postgres-service-db
     ports:
       - "5432:5432"
